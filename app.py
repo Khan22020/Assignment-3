@@ -98,18 +98,79 @@ if 'data_source' not in st.session_state:
 # Witcher-themed styling
 witcher_colors = get_witcher_color_palette()
 
-# Main header with Witcher theme
-st.markdown(
-    f"""
-    <h1 style='text-align: center; color: {witcher_colors['primary']}; margin-bottom: 5px'>
-        The Witcher's Financial Analysis
-    </h1>
-    <h3 style='text-align: center; color: {witcher_colors['secondary']}; font-style: italic; margin-top: 0; margin-bottom: 5px;'>
-        "{display_witcher_quote()}"
-    </h3>
-    """, 
-    unsafe_allow_html=True
-)
+# Main header with enhanced Witcher theme
+st.markdown(f"""
+<style>
+.witcher-title {{
+    font-family: 'Cinzel', serif !important;
+    font-size: 3.5rem !important;
+    text-align: center;
+    background: linear-gradient(45deg, #b80e0e, #ffcc00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+    margin-bottom: 0.5rem;
+    position: relative;
+    animation: glow 2s infinite alternate;
+    letter-spacing: 2px;
+}}
+
+@keyframes glow {{
+    0% {{text-shadow: 0 0 10px rgba(255, 204, 0, 0.3);}}
+    100% {{text-shadow: 0 0 20px rgba(255, 204, 0, 0.6), 0 0 30px rgba(184, 14, 14, 0.4);}}
+}}
+
+.medallion-container {{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 10px;
+}}
+
+.medallion-large {{
+    width: 70px;
+    height: 70px;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/2504/2504123.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%);
+    animation: medalPulse 3s infinite alternate;
+}}
+
+@keyframes medalPulse {{
+    0% {{transform: translateX(-50%) translateY(-100%) scale(1);}}
+    50% {{transform: translateX(-50%) translateY(-100%) scale(1.1);}}
+    100% {{transform: translateX(-50%) translateY(-100%) scale(1);}}
+}}
+
+.quote-container {{
+    text-align: center;
+    font-style: italic;
+    color: {witcher_colors['secondary']};
+    margin-top: 0;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    font-size: 1.2rem;
+    position: relative;
+}}
+
+.quote-container::before, .quote-container::after {{
+    content: '"';
+    font-size: 1.5rem;
+    color: {witcher_colors['accent1']};
+}}
+</style>
+
+<div class="medallion-container">
+    <div class="medallion-large"></div>
+</div>
+<h1 class="witcher-title">The Witcher's Financial Analysis</h1>
+<div class="quote-container">
+    {display_witcher_quote()}
+</div>
+""", unsafe_allow_html=True)
 
 # Load Witcher-themed animated GIF (finance related) with reduced size
 lottie_json = load_lottie_url("https://assets5.lottiefiles.com/packages/lf20_i9mtrven.json")
@@ -142,7 +203,41 @@ st.markdown(
 
 # Sidebar for navigation and data loading
 with st.sidebar:
-    st.markdown(f"<h3 style='color: {witcher_colors['primary']}'>The Witcher's Tools</h3>", unsafe_allow_html=True)
+    st.markdown(f"""
+    <style>
+    .sidebar-title {{
+        font-family: 'Cinzel', serif !important;
+        font-size: 1.8rem !important;
+        background: linear-gradient(45deg, {witcher_colors['primary']}, {witcher_colors['accent1']});
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 5px rgba(255, 204, 0, 0.3);
+        margin: 0 0 15px 0;
+        padding-bottom: 5px;
+        border-bottom: 2px solid {witcher_colors['primary']};
+        position: relative;
+        animation: pulse 2s infinite alternate;
+    }}
+    
+    @keyframes pulse {{
+        0% {{text-shadow: 0 0 5px rgba(255, 204, 0, 0.3);}}
+        100% {{text-shadow: 0 0 15px rgba(255, 204, 0, 0.6);}}
+    }}
+    
+    .sidebar-icon {{
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        margin-right: 8px;
+        vertical-align: middle;
+        background-image: url('https://cdn-icons-png.flaticon.com/512/2504/2504123.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+    }}
+    </style>
+    
+    <h3 class="sidebar-title"><span class="sidebar-icon"></span>The Witcher's Tools</h3>
+    """, unsafe_allow_html=True)
     
     # Data source selection
     st.markdown(f"<h4 style='color: {witcher_colors['secondary']}'>Step 1: Acquire the Contract</h4>", unsafe_allow_html=True)
@@ -499,42 +594,42 @@ if st.session_state.data is not None:
         
         col1, col2 = st.columns(2)
         
-        with col1:
-            st.dataframe(st.session_state.features.head(5), use_container_width=True)
-            st.markdown(f"**Features shape:** {st.session_state.features.shape}")
-            
-        with col2:
-            # Correlation heatmap with enhanced visibility
-            corr = st.session_state.features.corr()
-            # Generate a more readable heatmap
-            fig = px.imshow(
-                corr,
-                color_continuous_scale=[
-                    witcher_colors['dark'],
-                    witcher_colors['accent2'],
-                    witcher_colors['accent1'],
-                    witcher_colors['primary']
-                ],
-                zmin=-1, zmax=1, # Fixed range for better color contrast
-                height=450, # Taller heatmap for better visibility
-                width=550, # Wider heatmap
-                title="Feature Correlation Matrix"
-            )
-            fig.update_layout(
-                template='plotly_dark',
-                plot_bgcolor='rgba(45, 45, 45, 0.7)',
-                paper_bgcolor='rgba(45, 45, 45, 0.4)',
-                font=dict(color=witcher_colors['light']),
-                title_font=dict(color=witcher_colors['secondary'], size=18),
-                margin=dict(l=40, r=40, t=50, b=40)
-            )
-            # Make the text annotations more visible
-            fig.update_traces(
-                text=corr.round(2).values,
-                texttemplate="%{text}",
-                textfont=dict(color="white", size=10)
-            )
-            st.plotly_chart(fig, use_container_width=True)
+        # Show engineered features table first
+        st.dataframe(st.session_state.features.head(5), use_container_width=True)
+        st.markdown(f"**Features shape:** {st.session_state.features.shape}")
+        
+        # Enhanced correlation matrix below feature table with a small vertical spacing
+        st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color: #c9a66b;'>Feature Correlation Matrix</h4>", unsafe_allow_html=True)
+        
+        # Generate a more readable heatmap
+        corr = st.session_state.features.corr()
+        fig = px.imshow(
+            corr,
+            color_continuous_scale=[
+                witcher_colors['dark'],
+                witcher_colors['accent2'],
+                witcher_colors['accent1'],
+                witcher_colors['primary']
+            ],
+            zmin=-1, zmax=1, # Fixed range for better color contrast
+            height=500, # Taller heatmap for better visibility
+            title=None # Remove title as we have an h4 heading now
+        )
+        fig.update_layout(
+            template='plotly_dark',
+            plot_bgcolor='rgba(45, 45, 45, 0.7)',
+            paper_bgcolor='rgba(45, 45, 45, 0.4)',
+            font=dict(color=witcher_colors['light']),
+            margin=dict(l=40, r=40, t=10, b=40) # Reduced top margin since we have a separate heading
+        )
+        # Make the text annotations more visible
+        fig.update_traces(
+            text=corr.round(2).values,
+            texttemplate="%{text}",
+            textfont=dict(color="white", size=10)
+        )
+        st.plotly_chart(fig, use_container_width=True)
             
         # Target variable info
         st.markdown(f"<h4 style='color: {witcher_colors['secondary']}'>Target Variable</h4>", unsafe_allow_html=True)
