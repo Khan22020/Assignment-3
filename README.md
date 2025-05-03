@@ -25,8 +25,7 @@ Everything is done visually — no coding required for interaction!
 The goal is to **build practical ML skills** in finance by:
 
 - Understanding and applying ML concepts step-by-step
-- Working with real financial data (from CSV files and Yahoo Finance)
-- Creating a user-friendly dashboard with charts, animations, and themes
+- Working with real financial data (from CSV files and Yahoo Finance
 - Learning to visualize and evaluate models in an interactive way
 
 ---
@@ -45,8 +44,7 @@ The goal is to **build practical ML skills** in finance by:
 ✅ Choose your model (Linear, Logistic, or K-Means)  
 ✅ Go through each ML step via buttons with success/info messages  
 ✅ See clean visualizations at each step  
-✅ Get final predictions/clusters, with interactive charts  
-✅ Bonus: Download the results!
+✅ Get final predictions/clusters, with interactive charts
 
 ---
 
@@ -68,9 +66,26 @@ Each stage is separated by buttons for better control and understanding:
 
 ## 💻 How to Use the App
 
-### 🔧 Setup Instructions
+Install required libraries:
+pip install -r requirements.txt
 
-1. **Clone the repo**:
-   ```bash
-   git clone https://github.com/your-username/financial-ml-app.git
-   cd financial-ml-app
+Run the Streamlit app:
+streamlit run app.py
+
+🌐 Or Open the App Online
+👉 Streamlit Live Link
+📹 Watch Demo Video
+
+🧪 Tools and Libraries
+Streamlit – frontend and interaction
+Pandas, NumPy – data processing
+scikit-learn – machine learning
+yfinance – real-time stock data
+matplotlib, plotly – charts and visualizations
+
+🙋 Author
+Name: Mohadis Khan
+Section: BSFT06-C
+Email: i222273@nu.edu.pk
+Reg No: 22I-2273
+
