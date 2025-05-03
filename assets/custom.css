@@ -1,0 +1,206 @@
+/* Witcher 3 Themed Custom CSS */
+.stApp {
+    background-image: url('https://wallpapercave.com/wp/wp5784740.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/* Add a dark overlay to make text more readable */
+.stApp::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: -1;
+}
+
+/* Main header styling */
+h1 {
+    font-family: 'Cinzel', serif !important;
+    text-shadow: 2px 2px 4px rgba(184, 14, 14, 0.7);
+    border-bottom: 2px solid #b80e0e;
+    padding-bottom: 8px;
+    margin-bottom: 20px !important;
+}
+
+/* Secondary headers */
+h2, h3, h4 {
+    font-family: 'Cinzel', serif !important;
+    text-shadow: 1px 1px 3px rgba(201, 166, 107, 0.7);
+}
+
+/* Apply responsive design */
+@media (max-width: 768px) {
+    .stTabs [data-baseweb="tab-list"] {
+        flex-wrap: wrap;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        white-space: normal;
+    }
+    
+    /* Adjust column layouts for mobile */
+    [data-testid="column"] {
+        width: 100% !important;
+        margin-bottom: 1rem;
+    }
+}
+
+/* Custom styling for widgets */
+.stButton > button {
+    background-color: #b80e0e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s;
+}
+
+.stButton > button:hover {
+    background-color: #c9a66b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style metric widgets */
+[data-testid="stMetric"] {
+    background-color: rgba(45, 45, 45, 0.7);
+    border-radius: 10px;
+    padding: 10px;
+    border-left: 4px solid #b80e0e;
+}
+
+[data-testid="stMetricLabel"] {
+    color: #c9a66b !important;
+    font-weight: bold;
+}
+
+/* Style sidebar */
+.css-1d391kg {
+    background-color: rgba(26, 26, 26, 0.9) !important;
+}
+
+/* Style cards for content sections */
+div[data-testid="stBlock"] {
+    background-color: rgba(45, 45, 45, 0.7);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-left: 4px solid #b80e0e;
+    transition: transform 0.3s ease;
+}
+
+div[data-testid="stBlock"]:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Pipeline visualization styling */
+.pipeline-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 20px 0;
+    gap: 10px;
+}
+
+.pipeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 120px;
+    max-width: 150px;
+    margin: 10px;
+    padding: 15px;
+    background-color: rgba(45, 45, 45, 0.8);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.pipeline-step:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(184, 14, 14, 0.6);
+}
+
+.step-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.step-name {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.step-desc {
+    font-size: 12px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+/* Animated elements */
+.animated-element {
+    animation: fadeIn 1s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Witcher medallion icon */
+.medallion-icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-image: url('https://cdn-icons-png.flaticon.com/512/2504/2504123.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Custom tooltip styling */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #c9a66b;
+    color: #1a1a1a;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Progress bar styling */
+div.stProgress > div > div > div > div {
+    background-color: #b80e0e !important;
+}

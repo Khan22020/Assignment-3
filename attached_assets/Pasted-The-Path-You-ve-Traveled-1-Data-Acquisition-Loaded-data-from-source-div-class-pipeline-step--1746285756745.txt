@@ -1,0 +1,40 @@
+The Path You've Traveled
+1
+Data Acquisition
+Loaded data from source
+<div class="pipeline-step">
+            <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">2</div>
+            <div class="step-name" style="color: #c9a66b;">Data Preprocessing</div>
+            <div class="step-desc" style="color: #e8e8e8;">Cleaned and prepared data</div>
+        </div>
+
+        <div class="pipeline-step">
+            <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">3</div>
+            <div class="step-name" style="color: #c9a66b;">Feature Engineering</div>
+            <div class="step-desc" style="color: #e8e8e8;">Created and selected features</div>
+        </div>
+
+        <div class="pipeline-step">
+            <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">4</div>
+            <div class="step-name" style="color: #c9a66b;">Data Split</div>
+            <div class="step-desc" style="color: #e8e8e8;">Split into training and testing sets</div>
+        </div>
+
+        <div class="pipeline-step">
+            <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">5</div>
+            <div class="step-name" style="color: #c9a66b;">Model Training</div>
+            <div class="step-desc" style="color: #e8e8e8;">Trained LinearRegression</div>
+        </div>
+
+        <div class="pipeline-step">
+            <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">6</div>
+            <div class="step-name" style="color: #c9a66b;">Model Evaluation</div>
+            <div class="step-desc" style="color: #e8e8e8;">Tested model performance</div>
+        </div>
+
+        <div class="pipeline-step">
+            <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">7</div>
+            <div class="step-name" style="color: #c9a66b;">Results</div>
+            <div class="step-desc" style="color: #e8e8e8;">Analyzed findings</div>
+        </div>
+        </div>

@@ -8,10 +8,11 @@ import base64
 import time
 import yfinance as yf
 import io
+import os
 
 from data_processing import preprocess_data, feature_engineering, split_data
 from ml_models import train_model, evaluate_model, predict_with_model
-from utils import load_lottie_url, get_witcher_color_palette, get_symbol_suggestions
+from utils import load_lottie_url, get_witcher_color_palette, get_symbol_suggestions, display_witcher_quote
 
 # Page configuration
 st.set_page_config(
@@ -20,6 +21,49 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# Apply custom CSS for Witcher themed styling
+def load_css():
+    """Load custom CSS to make the app more visually appealing"""
+    css_file = os.path.join("assets", "custom.css")
+    if os.path.exists(css_file):
+        with open(css_file, "r") as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    else:
+        # Fallback inline CSS if file doesn't exist
+        st.markdown("""
+        <style>
+        .stApp {
+            background-image: url('https://wallpapercave.com/wp/wp5784740.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        .stApp::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: -1;
+        }
+        h1 {
+            font-family: 'Cinzel', serif !important;
+            text-shadow: 2px 2px 4px rgba(184, 14, 14, 0.7);
+            border-bottom: 2px solid #b80e0e;
+            padding-bottom: 8px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+    
+    # Add Google Font for Cinzel
+    st.markdown("""
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    """, unsafe_allow_html=True)
+
+load_css()
 
 # Initialize session state variables
 if 'data' not in st.session_state:
@@ -765,13 +809,61 @@ if st.session_state.data is not None:
         # Summary of the entire ML pipeline
         st.markdown(f"<h3 style='color: {witcher_colors['secondary']}'>The Witcher's Contract Complete</h3>", unsafe_allow_html=True)
         
-        # Success message with Witcher quote
-        st.success(
-            """
-            "Evil is evil. Lesser, greater, middling… Makes no difference. The degree is arbitrary. 
-            The definition's blurred. If I'm to choose between one model and another… I'd rather not choose at all."
+        # Display ML Pipeline journey visually
+        st.markdown("""
+        <h4>The Path You've Traveled</h4>
+        <div class="pipeline-container">
+            <div class="pipeline-step">
+                <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">1</div>
+                <div class="step-name" style="color: #c9a66b;">Data Acquisition</div>
+                <div class="step-desc" style="color: #e8e8e8;">Loaded data from source</div>
+            </div>
             
-            But you chose wisely, and your hunt was successful!
+            <div class="pipeline-step">
+                <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">2</div>
+                <div class="step-name" style="color: #c9a66b;">Data Preprocessing</div>
+                <div class="step-desc" style="color: #e8e8e8;">Cleaned and prepared data</div>
+            </div>
+
+            <div class="pipeline-step">
+                <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">3</div>
+                <div class="step-name" style="color: #c9a66b;">Feature Engineering</div>
+                <div class="step-desc" style="color: #e8e8e8;">Created and selected features</div>
+            </div>
+
+            <div class="pipeline-step">
+                <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">4</div>
+                <div class="step-name" style="color: #c9a66b;">Data Split</div>
+                <div class="step-desc" style="color: #e8e8e8;">Split into training and testing sets</div>
+            </div>
+
+            <div class="pipeline-step">
+                <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">5</div>
+                <div class="step-name" style="color: #c9a66b;">Model Training</div>
+                <div class="step-desc" style="color: #e8e8e8;">Trained model on data</div>
+            </div>
+
+            <div class="pipeline-step">
+                <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">6</div>
+                <div class="step-name" style="color: #c9a66b;">Model Evaluation</div>
+                <div class="step-desc" style="color: #e8e8e8;">Tested model performance</div>
+            </div>
+
+            <div class="pipeline-step">
+                <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">7</div>
+                <div class="step-name" style="color: #c9a66b;">Results</div>
+                <div class="step-desc" style="color: #e8e8e8;">Analyzed findings</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Success message with Witcher quote
+        witcher_quote = display_witcher_quote()
+        st.success(
+            f"""
+            "{witcher_quote}"
+            
+            Your financial hunt was successful! The patterns have been tracked, and the beast tamed.
             """
         )
         
