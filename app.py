@@ -111,6 +111,17 @@ with st.sidebar:
             try:
                 data = pd.read_csv(uploaded_file)
                 required_columns = ['date', 'price', 'open', 'high', 'low']
+                
+                # Add vol and change(%) if they don't exist
+                if 'vol' not in data.columns and 'volume' in data.columns:
+                    data = data.rename(columns={'volume': 'vol'})
+                elif 'vol' not in data.columns:
+                    data['vol'] = np.zeros(len(data))
+                    
+                if 'change(%)' not in data.columns and 'price' in data.columns:
+                    data['change(%)'] = data['price'].pct_change() * 100
+                    
+                # Check for required columns
                 if not all(col in data.columns for col in required_columns):
                     st.error("CSV must contain at minimum: date, price, open, high, low")
                 else:
@@ -129,6 +140,9 @@ with st.sidebar:
             suggestions = get_symbol_suggestions(ticker_suggestion)
             if suggestions:
                 selected_ticker = st.selectbox("Select a ticker:", suggestions)
+                # Extract just the ticker symbol if it's in format "AAPL - Apple Inc."
+                if "-" in selected_ticker:
+                    selected_ticker = selected_ticker.split("-")[0].strip()
             else:
                 selected_ticker = ticker_suggestion
                 
