@@ -75,23 +75,23 @@ streamlit run app.py
 --
 
 ##🌐 Or Open the App Online
-👉 Streamlit Live Link
-📹 Watch Demo Video
+-👉 https://assignment-3-erdt6bxwmqwrvtthuygiwv.streamlit.app/
+-📹 https://www.linkedin.com/posts/mohaddis-khan-66716725a_fintech-python-streamlit-activity-7324567634102919169-VCzW?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD-9RO8BwDF-_3L_pBQdS7YAWBeYQXbHkNI
 
 --
 
 ##🧪 Tools and Libraries
-Streamlit – frontend and interaction
-Pandas, NumPy – data processing
-scikit-learn – machine learning
-yfinance – real-time stock data
-matplotlib, plotly – charts and visualizations
+-Streamlit – frontend and interaction
+-Pandas, NumPy – data processing
+-scikit-learn – machine learning
+-yfinance – real-time stock data
+-matplotlib, plotly – charts and visualizations
 
 --
 
 ##🙋 Author
-Name: Mohadis Khan
-Section: BSFT06-C
-Email: i222273@nu.edu.pk
-Reg No: 22I-2273
+-Name: Mohadis Khan
+-Section: BSFT06-C
+-Email: i222273@nu.edu.pk
+-Reg No: 22I-2273
 
