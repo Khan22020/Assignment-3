@@ -9,6 +9,7 @@ def preprocess_data(data):
     Preprocess financial data:
     - Handle missing values
     - Convert date to datetime
+    - Convert string values to numeric
     - Add additional features if not present
     - Remove outliers
     - Normalize/standardize if needed
@@ -29,6 +30,49 @@ def preprocess_data(data):
     # Convert date to datetime if it's not already
     if 'date' in df.columns:
         df['date'] = pd.to_datetime(df['date'])
+    
+    # Convert string-based numeric values to actual numeric values
+    # Handle cases like '32.40K', '1.5M', etc.
+    def convert_to_numeric(val):
+        if pd.isna(val):
+            return val
+        
+        if isinstance(val, (int, float)):
+            return val
+            
+        if isinstance(val, str):
+            val = val.strip().upper()
+            if val.endswith('K'):
+                try:
+                    return float(val[:-1]) * 1000
+                except ValueError:
+                    return np.nan
+            elif val.endswith('M'):
+                try:
+                    return float(val[:-1]) * 1000000
+                except ValueError:
+                    return np.nan
+            elif val.endswith('B'):
+                try:
+                    return float(val[:-1]) * 1000000000
+                except ValueError:
+                    return np.nan
+            elif val.endswith('%'):
+                try:
+                    return float(val[:-1])
+                except ValueError:
+                    return np.nan
+            else:
+                try:
+                    return float(val.replace(',', ''))
+                except ValueError:
+                    return np.nan
+        return np.nan
+    
+    # Convert columns with potential string values to numeric
+    for col in ['open', 'high', 'low', 'price', 'vol', 'change(%)']:
+        if col in df.columns:
+            df[col] = df[col].apply(convert_to_numeric)
     
     # Fill missing values in key columns
     numeric_cols = df.select_dtypes(include=['float64', 'int64']).columns
