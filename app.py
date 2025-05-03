@@ -101,30 +101,30 @@ witcher_colors = get_witcher_color_palette()
 # Main header with Witcher theme
 st.markdown(
     f"""
-    <h1 style='text-align: center; color: {witcher_colors['primary']}; margin-bottom: 10px'>
+    <h1 style='text-align: center; color: {witcher_colors['primary']}; margin-bottom: 5px'>
         The Witcher's Financial Analysis
     </h1>
-    <h3 style='text-align: center; color: {witcher_colors['secondary']}; font-style: italic; margin-top: 0; margin-bottom: 20px;'>
+    <h3 style='text-align: center; color: {witcher_colors['secondary']}; font-style: italic; margin-top: 0; margin-bottom: 5px;'>
         "{display_witcher_quote()}"
     </h3>
     """, 
     unsafe_allow_html=True
 )
 
-# Load Witcher-themed animated GIF (finance related)
+# Load Witcher-themed animated GIF (finance related) with reduced size
 lottie_json = load_lottie_url("https://assets5.lottiefiles.com/packages/lf20_i9mtrven.json")
 st.markdown(
     f"""
-    <div style='display: flex; justify-content: center; margin-bottom: 20px;'>
+    <div style='display: flex; justify-content: center; margin-bottom: 5px; margin-top: 0;'>
         <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
         <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_i9mtrven.json" background="transparent" speed="1" 
-        style="width: 250px; height: 250px;" loop autoplay></lottie-player>
+        style="width: 200px; height: 200px;" loop autoplay></lottie-player>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-# Welcome message with reduced margin
+# Welcome message with minimal spacing
 st.markdown(
     f"""
     <div style='background-color: {witcher_colors['dark']}; padding: 15px; border-radius: 5px; margin-top: 0;'>
@@ -132,7 +132,7 @@ st.markdown(
             Welcome, traveler, to the Witcher's financial analysis portal. Here, you can harness the power of machine learning 
             to track market patterns and predict future movements - much like tracking a beast through the woods.
         </p>
-        <p style='color: {witcher_colors['light']}; font-size: 16px; margin-top: 0;'>
+        <p style='color: {witcher_colors['light']}; font-size: 16px; margin-top: 0; margin-bottom: 0;'>
             Upload your data, track market trends, and let the Signs of machine learning guide your financial hunt.
         </p>
     </div>
@@ -478,7 +478,7 @@ if st.session_state.data is not None:
             st.markdown(f"**Features shape:** {st.session_state.features.shape}")
             
         with col2:
-            # Correlation heatmap
+            # Correlation heatmap with enhanced visibility
             corr = st.session_state.features.corr()
             fig = px.imshow(
                 corr,
@@ -488,6 +488,8 @@ if st.session_state.data is not None:
                     witcher_colors['accent1'],
                     witcher_colors['primary']
                 ],
+                zmin=-1, zmax=1, # Fixed range for better color contrast
+                height=450, # Taller heatmap for better visibility
                 title="Feature Correlation Matrix"
             )
             fig.update_layout(

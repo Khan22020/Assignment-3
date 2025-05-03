@@ -30,13 +30,15 @@ h1 {
     text-shadow: 2px 2px 4px rgba(184, 14, 14, 0.7);
     border-bottom: 2px solid #b80e0e;
     padding-bottom: 8px;
-    margin-bottom: 20px !important;
+    margin-bottom: 10px !important;
 }
 
 /* Secondary headers */
 h2, h3, h4 {
     font-family: 'Cinzel', serif !important;
     text-shadow: 1px 1px 3px rgba(201, 166, 107, 0.7);
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
 }
 
 /* Apply responsive design */
@@ -93,8 +95,24 @@ h2, h3, h4 {
 }
 
 /* Style sidebar */
-.css-1d391kg {
-    background-color: rgba(26, 26, 26, 0.9) !important;
+section[data-testid="stSidebar"] {
+    background-image: url('https://wallpaperaccess.com/full/1103813.jpg') !important;
+    background-size: cover;
+    background-position: center;
+}
+section[data-testid="stSidebar"]::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(25, 25, 25, 0.85);
+    z-index: -1;
+}
+section[data-testid="stSidebar"] .block-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 /* Style cards for content sections */
