@@ -110,20 +110,51 @@ with st.sidebar:
         if uploaded_file is not None and st.button("Load Data", key="load_csv"):
             try:
                 data = pd.read_csv(uploaded_file)
-                required_columns = ['date', 'price', 'open', 'high', 'low']
                 
-                # Add vol and change(%) if they don't exist
-                if 'vol' not in data.columns and 'volume' in data.columns:
-                    data = data.rename(columns={'volume': 'vol'})
-                elif 'vol' not in data.columns:
+                # Convert column names to lowercase for case-insensitive matching
+                data.columns = [col.lower() for col in data.columns]
+                
+                # Handle common column name variations
+                column_mapping = {
+                    'date': 'date',
+                    'price': 'price',
+                    'open': 'open',
+                    'high': 'high',
+                    'low': 'low',
+                    'vol.': 'vol',
+                    'vol': 'vol',
+                    'volume': 'vol',
+                    'change%': 'change(%)',
+                    'change(%)': 'change(%)',
+                    'change %': 'change(%)'
+                }
+                
+                # Rename columns based on mapping
+                data = data.rename(columns={k: v for k, v in column_mapping.items() if k in data.columns})
+                
+                # Handle date column with variations
+                if 'date' not in data.columns:
+                    date_variations = ['time', 'datetime', 'day']
+                    for var in date_variations:
+                        if var in data.columns:
+                            data = data.rename(columns={var: 'date'})
+                            break
+                
+                # Add vol if it doesn't exist
+                if 'vol' not in data.columns:
                     data['vol'] = np.zeros(len(data))
                     
+                # Add change(%) if it doesn't exist
                 if 'change(%)' not in data.columns and 'price' in data.columns:
                     data['change(%)'] = data['price'].pct_change() * 100
-                    
+                
+                # Required columns for the application
+                required_columns = ['date', 'price', 'open', 'high', 'low']
+                
                 # Check for required columns
-                if not all(col in data.columns for col in required_columns):
-                    st.error("CSV must contain at minimum: date, price, open, high, low")
+                missing_columns = [col for col in required_columns if col not in data.columns]
+                if missing_columns:
+                    st.error(f"CSV is missing required columns: {', '.join(missing_columns)}")
                 else:
                     st.session_state.data = data
                     st.session_state.data_source = "CSV"
