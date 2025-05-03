@@ -521,9 +521,12 @@ if st.session_state.data is not None:
             test_mean = st.session_state.X_test.mean()
             
             # Check if the distributions are similar
+            # Calculate similarity score and cap it at 1.0 to avoid errors
             similarity = 1 - (abs(train_mean - test_mean) / train_mean).mean()
+            # Ensure similarity is between 0 and 1 for the progress bar
+            capped_similarity = min(max(float(similarity), 0.0), 1.0)
             
-            st.progress(float(similarity), text=f"Feature Distribution Similarity: {similarity:.2%}")
+            st.progress(capped_similarity, text=f"Feature Distribution Similarity: {similarity:.2%}")
             
             if similarity > 0.9:
                 st.success("✅ Train and test sets have similar distributions")
