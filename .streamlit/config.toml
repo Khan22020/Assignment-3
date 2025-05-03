@@ -1,7 +1,8 @@
 [server]
-headless = true
-address = "0.0.0.0"
+address = "localhost"
 port = 5000
+enableCORS = false
+enableXsrfProtection = false
 
 [theme]
 primaryColor = "#b80e0e"  # Witcher red
@@ -11,4 +12,6 @@ textColor = "#ffffff"  # White text
 font = "sans serif"
 
 [browser]
+serverAddress = "localhost"
+serverPort = 5000
 gatherUsageStats = false

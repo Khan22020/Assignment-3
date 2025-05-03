@@ -22,6 +22,71 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# Loading screen with Witcher logo
+st.markdown("""
+<style>
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeOut 2s ease-in-out forwards;
+    animation-delay: 2s;
+}
+
+.witcher-logo {
+    width: 200px;
+    height: 200px;
+    background: url('https://cdn-icons-png.flaticon.com/512/2504/2504123.png') center/contain no-repeat;
+    animation: logoPulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px #ff1744);
+}
+
+.loading-text {
+    position: absolute;
+    bottom: 30%;
+    color: #ffe600;
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    text-shadow: 0 0 10px #ff1744;
+    animation: textGlow 2s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px #ff1744); }
+    50% { transform: scale(1.1); filter: drop-shadow(0 0 30px #ffe600); }
+}
+
+@keyframes textGlow {
+    0%, 100% { text-shadow: 0 0 10px #ff1744; }
+    50% { text-shadow: 0 0 20px #ffe600; }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+}
+
+/* Add Google Font for Cinzel */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+</style>
+
+<div class="loading-screen">
+    <div class="witcher-logo"></div>
+    <div class="loading-text">Loading The Witcher's Financial Analysis...</div>
+</div>
+""", unsafe_allow_html=True)
+
+# Add a small delay to show the loading screen
+import time
+time.sleep(2)
+
 # Apply custom CSS for Witcher themed styling
 def load_css():
     """Load custom CSS to make the app more visually appealing"""
@@ -33,29 +98,191 @@ def load_css():
         # Fallback inline CSS if file doesn't exist
         st.markdown("""
         <style>
+        /* Main app container */
         .stApp {
-            background-image: url('https://wallpapercave.com/wp/wp5784740.jpg');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
+            position: relative;
+            min-height: 100vh;
+            background: #1a1a1a;
+            overflow: hidden;
         }
+
+        /* Main background with Witcher theme */
         .stApp::before {
             content: "";
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: -1;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            background: url('https://wallpapercave.com/wp/wp5784740.jpg') center center/cover;
+            animation: bgPulse 20s ease-in-out infinite;
+            opacity: 0.7;
         }
+
+        /* Animated overlay with Witcher medallion pattern */
+        .stApp::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(255, 23, 68, 0.1) 0%, transparent 50%),
+                repeating-linear-gradient(45deg, rgba(255, 230, 0, 0.05) 0px, rgba(255, 230, 0, 0.05) 1px, transparent 1px, transparent 10px);
+            animation: overlayPulse 10s ease-in-out infinite;
+        }
+
+        /* Floating Witcher medallions */
+        .witcher-medallion {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            background: url('https://cdn-icons-png.flaticon.com/512/2504/2504123.png') center/contain no-repeat;
+            opacity: 0.1;
+            z-index: -1;
+            animation: floatMedallion 15s ease-in-out infinite;
+        }
+
+        .medallion-1 {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .medallion-2 {
+            top: 20%;
+            right: 15%;
+            animation-delay: -5s;
+        }
+
+        .medallion-3 {
+            bottom: 15%;
+            left: 20%;
+            animation-delay: -10s;
+        }
+
+        /* Animations */
+        @keyframes bgPulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        @keyframes overlayPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes floatMedallion {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(10px, -10px) rotate(5deg); }
+            50% { transform: translate(0, -20px) rotate(0deg); }
+            75% { transform: translate(-10px, -10px) rotate(-5deg); }
+        }
+
+        /* Content styling */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: 0 0 20px rgba(255, 23, 68, 0.3);
+        }
+
+        /* Enhanced text styling */
         h1 {
             font-family: 'Cinzel', serif !important;
-            text-shadow: 2px 2px 4px rgba(184, 14, 14, 0.7);
-            border-bottom: 2px solid #b80e0e;
+            text-shadow: 2px 2px 8px #ffe600, 0 0 8px #ff1744;
+            border-bottom: 2px solid #ff1744;
             padding-bottom: 8px;
+            color: #ff1744 !important;
+            position: relative;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #ff1744, #ffe600, #ff1744);
+            animation: borderGlow 2s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Button styling */
+        .stButton>button {
+            background-color: #ff1744 !important;
+            color: #ffe600 !important;
+            border: 2px solid #ffe600 !important;
+            border-radius: 5px !important;
+            padding: 0.5rem 1rem !important;
+            font-weight: bold !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 2px 8px #ffe60033 !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stButton>button::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 230, 0, 0.3), transparent);
+            transform: rotate(45deg);
+            animation: buttonShine 3s linear infinite;
+        }
+
+        @keyframes buttonShine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .stButton>button:hover {
+            background-color: #ffe600 !important;
+            color: #ff1744 !important;
+            border-color: #ff1744 !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 16px #ff174433 !important;
+        }
+
+        /* Text styling */
+        p, h2, h3, h4, h5, h6, label, .stMarkdown {
+            color: #ffe600 !important;
+            text-shadow: 0 0 4px #ff1744;
+        }
+
+        /* Input styling */
+        .stSelectbox, .stTextInput {
+            background-color: rgba(255, 241, 118, 0.1) !important;
+            color: #ffe600 !important;
+            border: 1px solid #ff1744 !important;
+            border-radius: 5px !important;
+            padding: 5px !important;
+        }
+
+        .stSelectbox:hover, .stTextInput:hover {
+            border-color: #ffe600 !important;
+            box-shadow: 0 0 10px rgba(255, 230, 0, 0.3) !important;
         }
         </style>
+
+        <!-- Add floating medallions -->
+        <div class="witcher-medallion medallion-1"></div>
+        <div class="witcher-medallion medallion-2"></div>
+        <div class="witcher-medallion medallion-3"></div>
         """, unsafe_allow_html=True)
     
     # Add Google Font for Cinzel
@@ -105,44 +332,48 @@ st.markdown(f"""
     font-family: 'Cinzel', serif !important;
     font-size: 3.5rem !important;
     text-align: center;
-    background: linear-gradient(45deg, #b80e0e, #ffcc00);
+    background: linear-gradient(45deg, #ff1744, #ffe600, #ff1744);
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 10px rgba(255, 204, 0, 0.3);
+    animation: shine 3s linear infinite;
+    text-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
     margin-bottom: 0.5rem;
     position: relative;
-    animation: glow 2s infinite alternate;
     letter-spacing: 2px;
 }}
 
-@keyframes glow {{
-    0% {{text-shadow: 0 0 10px rgba(255, 204, 0, 0.3);}}
-    100% {{text-shadow: 0 0 20px rgba(255, 204, 0, 0.6), 0 0 30px rgba(184, 14, 14, 0.4);}}
-}}
-
-.medallion-container {{
-    display: flex;
-    justify-content: center;
-    position: relative;
-    margin-bottom: 10px;
-}}
-
 .medallion-large {{
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     background-image: url('https://cdn-icons-png.flaticon.com/512/2504/2504123.png');
     background-size: contain;
     background-repeat: no-repeat;
     position: absolute;
     left: 50%;
     transform: translateX(-50%) translateY(-100%);
-    animation: medalPulse 3s infinite alternate;
+    animation: medalPulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px #ff1744);
+}}
+
+@keyframes shine {{
+    0% {{ background-position: 0% center; }}
+    100% {{ background-position: 200% center; }}
 }}
 
 @keyframes medalPulse {{
-    0% {{transform: translateX(-50%) translateY(-100%) scale(1);}}
-    50% {{transform: translateX(-50%) translateY(-100%) scale(1.1);}}
-    100% {{transform: translateX(-50%) translateY(-100%) scale(1);}}
+    0% {{
+        transform: translateX(-50%) translateY(-100%) scale(1);
+        filter: drop-shadow(0 0 20px #ff1744);
+    }}
+    50% {{
+        transform: translateX(-50%) translateY(-100%) scale(1.2);
+        filter: drop-shadow(0 0 30px #ffe600);
+    }}
+    100% {{
+        transform: translateX(-50%) translateY(-100%) scale(1);
+        filter: drop-shadow(0 0 20px #ff1744);
+    }}
 }}
 
 .quote-container {{
@@ -154,12 +385,13 @@ st.markdown(f"""
     padding: 5px 10px;
     font-size: 1.2rem;
     position: relative;
+    text-shadow: 0 0 10px #ff1744;
+    animation: quoteGlow 2s ease-in-out infinite;
 }}
 
-.quote-container::before, .quote-container::after {{
-    content: '"';
-    font-size: 1.5rem;
-    color: {witcher_colors['accent1']};
+@keyframes quoteGlow {{
+    0%, 100% {{ text-shadow: 0 0 10px #ff1744; }}
+    50% {{ text-shadow: 0 0 20px #ffe600; }}
 }}
 </style>
 
@@ -208,7 +440,7 @@ with st.sidebar:
     .sidebar-title {{
         font-family: 'Cinzel', serif !important;
         font-size: 1.8rem !important;
-        background: linear-gradient(45deg, {witcher_colors['primary']}, {witcher_colors['accent1']});
+        background: linear-gradient(45deg, {witcher_colors['primary']}, {witcher_colors['secondary']});
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-shadow: 0 0 5px rgba(255, 204, 0, 0.3);
@@ -325,29 +557,61 @@ with st.sidebar:
         if selected_ticker and st.button("Fetch Data", key="fetch_yf"):
             try:
                 with st.spinner("🔮 Casting Quen to protect against market volatility..."):
-                    data = yf.download(selected_ticker, period=period)
+                    # Download data with proper error handling
+                    ticker = yf.Ticker(selected_ticker)
+                    data = ticker.history(period=period)
+                    
                     if data.empty:
                         st.error(f"No data found for {selected_ticker}")
                     else:
-                        # Rename columns to match expected format
+                        # Reset index to make date a column
                         data = data.reset_index()
-                        data.columns = [x.lower() for x in data.columns]
-                        data = data.rename(columns={
-                            'adj close': 'price',
-                            'volume': 'vol',
-                            'date': 'date'
-                        })
-                        if 'change(%)' not in data.columns:
-                            # Calculate daily percentage change
-                            data['change(%)'] = data['price'].pct_change() * 100
                         
-                        st.session_state.data = data
-                        st.session_state.data_source = "Yahoo Finance"
-                        st.success(f"📜 Contract acquired! Data for {selected_ticker} loaded successfully.")
-                        st.session_state.current_step = 2
-                        st.rerun()
+                        # Rename columns to match expected format
+                        column_mapping = {
+                            'Date': 'date',
+                            'Open': 'open',
+                            'High': 'high',
+                            'Low': 'low',
+                            'Close': 'price',
+                            'Adj Close': 'price',
+                            'Volume': 'vol'
+                        }
+                        
+                        # Rename columns that exist in the data
+                        data = data.rename(columns={k: v for k, v in column_mapping.items() if k in data.columns})
+                        
+                        # Ensure all required columns exist
+                        required_columns = ['date', 'price', 'open', 'high', 'low']
+                        missing_cols = [col for col in required_columns if col not in data.columns]
+                        
+                        if missing_cols:
+                            st.error(f"Missing required columns: {', '.join(missing_cols)}")
+                        else:
+                            # Add volume if it doesn't exist
+                            if 'vol' not in data.columns:
+                                data['vol'] = 0
+                            
+                            # Calculate percentage change
+                            data['change(%)'] = data['price'].pct_change() * 100
+                            
+                            # Convert date to datetime if it's not already
+                            data['date'] = pd.to_datetime(data['date'])
+                            
+                            # Store the data
+                            st.session_state.data = data
+                            st.session_state.data_source = "Yahoo Finance"
+                            st.success(f"📜 Contract acquired! Data for {selected_ticker} loaded successfully.")
+                            st.session_state.current_step = 2
+                            st.rerun()
             except Exception as e:
-                st.error(f"Error fetching data: {e}")
+                error_message = str(e)
+                if "too many requests" in error_message.lower():
+                    st.error("Error fetching data from API due to too many requests. Please wait a moment and try again.")
+                elif "symbol may be delisted" in error_message.lower():
+                    st.error(f"Error: The symbol {selected_ticker} may be delisted or invalid. Please check the symbol and try again.")
+                else:
+                    st.error(f"Error fetching data: {error_message}")
     
     # Only show further steps if data is loaded
     if st.session_state.data is not None:
@@ -963,8 +1227,8 @@ if st.session_state.data is not None:
             with col:
                 st.markdown(
                     f"""
-                    <div style="text-align: center; background-color: rgba(45, 45, 45, 0.8); border-radius: 10px; padding: 15px; height: 100%;">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #b80e0e; color: #e8e8e8; 
+                    <div style="text-align: center; background-color: #1a1a1a; border-radius: 10px; padding: 15px; height: 100%;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #ff1744; color: #ffe600; 
                                 display: flex; align-items: center; justify-content: center; margin: 0 auto 10px auto;
                                 font-size: 20px; font-weight: bold;">
                             {step["icon"]}
@@ -1203,3 +1467,195 @@ else:
         """,
         unsafe_allow_html=True
     )
+
+# Custom CSS for enhanced UI elements
+st.markdown("""
+<style>
+/* Text animations */
+h1, h2, h3, h4, h5, h6 {
+    animation: textGlow 2s ease-in-out infinite !important;
+}
+
+@keyframes textGlow {
+    0%, 100% { text-shadow: 0 0 10px rgba(255, 23, 68, 0.5); }
+    50% { text-shadow: 0 0 20px rgba(255, 230, 0, 0.7); }
+}
+
+/* Graph animations and styling */
+[data-testid="stPlotlyChart"] {
+    animation: graphFadeIn 1s ease-out !important;
+    transition: all 0.3s ease !important;
+}
+
+[data-testid="stPlotlyChart"]:hover {
+    transform: scale(1.02) !important;
+    box-shadow: 0 0 30px rgba(255, 230, 0, 0.5) !important;
+}
+
+@keyframes graphFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Metric animations */
+[data-testid="stMetricValue"] {
+    animation: metricPulse 2s ease-in-out infinite !important;
+}
+
+[data-testid="stMetricLabel"] {
+    animation: labelGlow 2s ease-in-out infinite !important;
+}
+
+@keyframes metricPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@keyframes labelGlow {
+    0%, 100% { text-shadow: 0 0 5px rgba(255, 23, 68, 0.3); }
+    50% { text-shadow: 0 0 15px rgba(255, 230, 0, 0.5); }
+}
+
+/* Table animations */
+[data-testid="stDataFrame"] {
+    animation: tableFadeIn 1s ease-out !important;
+    transition: all 0.3s ease !important;
+}
+
+[data-testid="stDataFrame"]:hover {
+    box-shadow: 0 0 20px rgba(255, 23, 68, 0.3) !important;
+}
+
+@keyframes tableFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tab animations */
+[data-testid="stTabs"] {
+    animation: tabsFadeIn 0.5s ease-out !important;
+}
+
+@keyframes tabsFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Success message animations */
+.element-container:has(.stSuccess) {
+    animation: successPulse 2s ease-in-out infinite !important;
+}
+
+@keyframes successPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+/* Error message animations */
+.element-container:has(.stError) {
+    animation: errorShake 0.5s ease-in-out !important;
+}
+
+@keyframes errorShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Chart tooltip animations */
+.js-plotly-plot .plotly .hoverlayer .hover {
+    animation: tooltipFade 0.3s ease-out !important;
+}
+
+@keyframes tooltipFade {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Loading spinner animations */
+.stSpinner {
+    animation: spinnerPulse 1.5s ease-in-out infinite !important;
+}
+
+@keyframes spinnerPulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.1); opacity: 1; }
+}
+
+/* Progress bar animations */
+.stProgress > div > div {
+    background: linear-gradient(45deg, #ff1744, #ffe600) !important;
+    background-size: 200% auto !important;
+    animation: progressShine 2s linear infinite !important;
+}
+
+@keyframes progressShine {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+/* Quote container animations */
+.quote-container {
+    animation: quoteFloat 3s ease-in-out infinite !important;
+}
+
+@keyframes quoteFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Keep existing button and navbar styles */
+.stButton > button {
+    background: linear-gradient(45deg, #ff1744, #ffe600);
+    background-size: 200% auto;
+    color: #1a1a1a !important;
+    font-weight: bold !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 0.5rem 1rem !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 0 15px rgba(255, 23, 68, 0.5) !important;
+    animation: buttonShine 3s linear infinite, buttonBlink 2s ease-in-out infinite !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+.stButton > button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 230, 0, 0.4),
+        transparent
+    );
+    animation: buttonGlow 2s linear infinite;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 0 25px rgba(255, 230, 0, 0.7) !important;
+    background-position: right center !important;
+    animation: buttonShine 1.5s linear infinite, buttonBlink 1s ease-in-out infinite !important;
+}
+
+@keyframes buttonShine {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+@keyframes buttonBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes buttonGlow {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+</style>
+""", unsafe_allow_html=True)

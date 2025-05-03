@@ -6,15 +6,15 @@ import yfinance as yf
 
 def get_witcher_color_palette():
     """
-    Returns a color palette inspired by The Witcher 3 game.
+    Returns a color palette inspired by The Witcher, now with bright red and yellow.
     """
     return {
-        'primary': '#b80e0e',      # Witcher red (main theme color)
-        'secondary': '#c9a66b',    # Medallion gold
-        'accent1': '#658966',      # Forest green
-        'accent2': '#8a866e',      # Leather brown
-        'dark': '#191919',         # Dark background
-        'light': '#e8e8e8'         # Light text
+        'primary': '#ff1744',      # Bright red
+        'secondary': '#ffe600',    # Bright yellow
+        'accent1': '#ff5252',      # Accent red
+        'accent2': '#fff176',      # Accent yellow
+        'dark': '#1a1a1a',         # Dark background
+        'light': '#fffde7'         # Light text
     }
 
 def load_lottie_url(url: str):
