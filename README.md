@@ -72,18 +72,24 @@ pip install -r requirements.txt
 Run the Streamlit app:
 streamlit run app.py
 
-🌐 Or Open the App Online
+--
+
+##🌐 Or Open the App Online
 👉 Streamlit Live Link
 📹 Watch Demo Video
 
-🧪 Tools and Libraries
+--
+
+##🧪 Tools and Libraries
 Streamlit – frontend and interaction
 Pandas, NumPy – data processing
 scikit-learn – machine learning
 yfinance – real-time stock data
 matplotlib, plotly – charts and visualizations
 
-🙋 Author
+--
+
+##🙋 Author
 Name: Mohadis Khan
 Section: BSFT06-C
 Email: i222273@nu.edu.pk
