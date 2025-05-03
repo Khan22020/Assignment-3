@@ -375,8 +375,8 @@ if st.session_state.data is not None:
         if st.session_state.data_source:
             st.metric("Data Source", st.session_state.data_source)
             
-    # Data table with tabs
-    tab1, tab2 = st.tabs(["📊 Data Preview", "📈 Price Chart"])
+    # Data table with tabs - using a more organized layout
+    tab1, tab2, tab3 = st.tabs(["📊 Data Preview", "📈 Price Chart", "📊 Data Statistics"])
     
     with tab1:
         st.dataframe(st.session_state.data.head(10), use_container_width=True)
@@ -396,14 +396,40 @@ if st.session_state.data is not None:
                           })
                 fig.update_layout(
                     template='plotly_dark',
-                    plot_bgcolor=witcher_colors['dark'],
-                    paper_bgcolor=witcher_colors['dark'],
+                    plot_bgcolor='rgba(45, 45, 45, 0.7)',
+                    paper_bgcolor='rgba(45, 45, 45, 0.4)',
                     font=dict(color=witcher_colors['light']),
-                    legend_title_text='Metric'
+                    legend_title_text='Metric',
+                    title_font=dict(color=witcher_colors['secondary'], size=18),
+                    height=400
                 )
                 st.plotly_chart(fig, use_container_width=True)
         except Exception as e:
             st.error(f"Error creating chart: {e}")
+            
+    with tab3:
+        # Display descriptive statistics
+        st.markdown("<h4>Descriptive Statistics</h4>", unsafe_allow_html=True)
+        st.dataframe(st.session_state.data.describe(), use_container_width=True)
+        
+        # Add a volume histogram if volume exists
+        if 'vol' in st.session_state.data.columns:
+            fig = px.histogram(
+                st.session_state.data, 
+                x='vol',
+                title="Volume Distribution",
+                template="plotly_dark",
+                nbins=30
+            )
+            fig.update_layout(
+                plot_bgcolor='rgba(45, 45, 45, 0.7)',
+                paper_bgcolor='rgba(45, 45, 45, 0.4)',
+                font=dict(color=witcher_colors['light']),
+                title_font=dict(color=witcher_colors['secondary'], size=16),
+                height=350
+            )
+            fig.update_traces(marker_color=witcher_colors['accent1'])
+            st.plotly_chart(fig, use_container_width=True)
 
     # Preprocessing results - Step 2 content
     if st.session_state.current_step >= 3 and st.session_state.processed_data is not None:
@@ -480,6 +506,7 @@ if st.session_state.data is not None:
         with col2:
             # Correlation heatmap with enhanced visibility
             corr = st.session_state.features.corr()
+            # Generate a more readable heatmap
             fig = px.imshow(
                 corr,
                 color_continuous_scale=[
@@ -490,13 +517,22 @@ if st.session_state.data is not None:
                 ],
                 zmin=-1, zmax=1, # Fixed range for better color contrast
                 height=450, # Taller heatmap for better visibility
+                width=550, # Wider heatmap
                 title="Feature Correlation Matrix"
             )
             fig.update_layout(
                 template='plotly_dark',
-                plot_bgcolor=witcher_colors['dark'],
-                paper_bgcolor=witcher_colors['dark'],
-                font=dict(color=witcher_colors['light'])
+                plot_bgcolor='rgba(45, 45, 45, 0.7)',
+                paper_bgcolor='rgba(45, 45, 45, 0.4)',
+                font=dict(color=witcher_colors['light']),
+                title_font=dict(color=witcher_colors['secondary'], size=18),
+                margin=dict(l=40, r=40, t=50, b=40)
+            )
+            # Make the text annotations more visible
+            fig.update_traces(
+                text=corr.round(2).values,
+                texttemplate="%{text}",
+                textfont=dict(color="white", size=10)
             )
             st.plotly_chart(fig, use_container_width=True)
             
