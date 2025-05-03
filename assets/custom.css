@@ -1,9 +1,15 @@
 /* Witcher 3 Themed Custom CSS */
+body {
+    margin: 0;
+    padding: 0;
+}
+
 .stApp {
-    background-image: url('https://wallpapercave.com/wp/wp5784740.jpg');
+    background-image: url('https://cdn.wallpapersafari.com/57/66/VOaSHu.jpg');
     background-size: cover;
     background-attachment: fixed;
-    background-position: center;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
 /* Add a dark overlay to make text more readable */
@@ -14,7 +20,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: rgba(0, 0, 0, 0.75);
     z-index: -1;
 }
 
@@ -53,17 +59,24 @@ h2, h3, h4 {
 /* Custom styling for widgets */
 .stButton > button {
     background-color: #b80e0e;
-    color: white;
+    color: white !important;
     border: none;
     border-radius: 4px;
     padding: 0.5rem 1rem;
     transition: all 0.3s;
+    font-weight: bold;
 }
 
 .stButton > button:hover {
     background-color: #c9a66b;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Fix for button text disappearing */
+.stButton button p {
+    color: white !important;
+    margin: 0;
 }
 
 /* Style metric widgets */

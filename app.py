@@ -101,12 +101,11 @@ witcher_colors = get_witcher_color_palette()
 # Main header with Witcher theme
 st.markdown(
     f"""
-    <h1 style='text-align: center; color: {witcher_colors['primary']}; margin-bottom: 0'>
+    <h1 style='text-align: center; color: {witcher_colors['primary']}; margin-bottom: 10px'>
         The Witcher's Financial Analysis
     </h1>
-    <h3 style='text-align: center; color: {witcher_colors['secondary']}; font-style: italic; margin-top: 0'>
-        "Evil is evil. Lesser, greater, middling… Makes no difference. The degree is arbitrary. 
-        The definition's blurred. If I'm to choose between one evil and another… I'd rather not choose at all."
+    <h3 style='text-align: center; color: {witcher_colors['secondary']}; font-style: italic; margin-top: 0; margin-bottom: 20px;'>
+        "{display_witcher_quote()}"
     </h3>
     """, 
     unsafe_allow_html=True
@@ -116,24 +115,24 @@ st.markdown(
 lottie_json = load_lottie_url("https://assets5.lottiefiles.com/packages/lf20_i9mtrven.json")
 st.markdown(
     f"""
-    <div style='display: flex; justify-content: center;'>
+    <div style='display: flex; justify-content: center; margin-bottom: 20px;'>
         <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
         <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_i9mtrven.json" background="transparent" speed="1" 
-        style="width: 300px; height: 300px;" loop autoplay></lottie-player>
+        style="width: 250px; height: 250px;" loop autoplay></lottie-player>
     </div>
     """,
     unsafe_allow_html=True
 )
 
-# Welcome message
+# Welcome message with reduced margin
 st.markdown(
     f"""
-    <div style='background-color: {witcher_colors['dark']}; padding: 15px; border-radius: 5px; margin: 10px 0;'>
-        <p style='color: {witcher_colors['light']}; font-size: 16px;'>
+    <div style='background-color: {witcher_colors['dark']}; padding: 15px; border-radius: 5px; margin-top: 0;'>
+        <p style='color: {witcher_colors['light']}; font-size: 16px; margin-bottom: 10px;'>
             Welcome, traveler, to the Witcher's financial analysis portal. Here, you can harness the power of machine learning 
             to track market patterns and predict future movements - much like tracking a beast through the woods.
         </p>
-        <p style='color: {witcher_colors['light']}; font-size: 16px;'>
+        <p style='color: {witcher_colors['light']}; font-size: 16px; margin-top: 0;'>
             Upload your data, track market trends, and let the Signs of machine learning guide your financial hunt.
         </p>
     </div>
@@ -809,53 +808,44 @@ if st.session_state.data is not None:
         # Summary of the entire ML pipeline
         st.markdown(f"<h3 style='color: {witcher_colors['secondary']}'>The Witcher's Contract Complete</h3>", unsafe_allow_html=True)
         
-        # Display ML Pipeline journey visually
-        st.markdown("""
-        <h4>The Path You've Traveled</h4>
-        <div class="pipeline-container">
-            <div class="pipeline-step">
-                <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">1</div>
-                <div class="step-name" style="color: #c9a66b;">Data Acquisition</div>
-                <div class="step-desc" style="color: #e8e8e8;">Loaded data from source</div>
-            </div>
-            
-            <div class="pipeline-step">
-                <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">2</div>
-                <div class="step-name" style="color: #c9a66b;">Data Preprocessing</div>
-                <div class="step-desc" style="color: #e8e8e8;">Cleaned and prepared data</div>
-            </div>
-
-            <div class="pipeline-step">
-                <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">3</div>
-                <div class="step-name" style="color: #c9a66b;">Feature Engineering</div>
-                <div class="step-desc" style="color: #e8e8e8;">Created and selected features</div>
-            </div>
-
-            <div class="pipeline-step">
-                <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">4</div>
-                <div class="step-name" style="color: #c9a66b;">Data Split</div>
-                <div class="step-desc" style="color: #e8e8e8;">Split into training and testing sets</div>
-            </div>
-
-            <div class="pipeline-step">
-                <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">5</div>
-                <div class="step-name" style="color: #c9a66b;">Model Training</div>
-                <div class="step-desc" style="color: #e8e8e8;">Trained model on data</div>
-            </div>
-
-            <div class="pipeline-step">
-                <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">6</div>
-                <div class="step-name" style="color: #c9a66b;">Model Evaluation</div>
-                <div class="step-desc" style="color: #e8e8e8;">Tested model performance</div>
-            </div>
-
-            <div class="pipeline-step">
-                <div class="step-icon" style="background-color: #b80e0e; color: #e8e8e8;">7</div>
-                <div class="step-name" style="color: #c9a66b;">Results</div>
-                <div class="step-desc" style="color: #e8e8e8;">Analyzed findings</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        # Display ML Pipeline journey visually in a clean way
+        # Create a pipeline visualization with structured code rather than raw HTML
+        pipeline_steps = [
+            {"name": "Data Acquisition", "desc": "Loaded data from source", "icon": "1"},
+            {"name": "Data Preprocessing", "desc": "Cleaned and prepared data", "icon": "2"},
+            {"name": "Feature Engineering", "desc": "Created and selected features", "icon": "3"},
+            {"name": "Data Split", "desc": "Split into training and testing sets", "icon": "4"},
+            {"name": "Model Training", "desc": f"Trained model on data", "icon": "5"},
+            {"name": "Model Evaluation", "desc": "Tested model performance", "icon": "6"},
+            {"name": "Results", "desc": "Analyzed findings", "icon": "7"}
+        ]
+        
+        st.markdown("<h4>The Path You've Traveled</h4>", unsafe_allow_html=True)
+        
+        # Create a clean container for the steps
+        cols = st.columns(len(pipeline_steps))
+        
+        # Add each step in its own column
+        for i, (col, step) in enumerate(zip(cols, pipeline_steps)):
+            with col:
+                st.markdown(
+                    f"""
+                    <div style="text-align: center; background-color: rgba(45, 45, 45, 0.8); border-radius: 10px; padding: 15px; height: 100%;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #b80e0e; color: #e8e8e8; 
+                                display: flex; align-items: center; justify-content: center; margin: 0 auto 10px auto;
+                                font-size: 20px; font-weight: bold;">
+                            {step["icon"]}
+                        </div>
+                        <div style="font-weight: bold; color: #c9a66b; margin-bottom: 5px;">
+                            {step["name"]}
+                        </div>
+                        <div style="font-size: 12px; color: #e8e8e8;">
+                            {step["desc"]}
+                        </div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
         
         # Success message with Witcher quote
         witcher_quote = display_witcher_quote()
